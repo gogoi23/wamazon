@@ -1,0 +1,13 @@
+<?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "Devam123";
+        $db = "web";
+        $conn = mysqli_connect($servername, $username, $password, $db);
+        if (!$conn) {
+                echo "Error: Could not connect to data base." . mysqli_connect_error();
+        }
+        $allHissQuery = "select * from hisses";
+        $allHissAttribute = mysqli_query($conn,$allHissQuery);
+        echo "hello";
+?>
