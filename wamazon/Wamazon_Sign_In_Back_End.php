@@ -1,3 +1,6 @@
+<!-- Author: Anand Gogoi -->
+<!-- This is the backend page that handles new users trying to sign up.  -->
+
 <html>
 <title>
 Wamazon Home Page 
@@ -30,14 +33,17 @@ Wamazon Home Page
 		//This pulls the results out of the query. 
 		$users = mysqli_fetch_all($result,MYSQLI_ASSOC);
 		
+		//if the usernames all ready exits it prompts the user to back and select another user name. 
 		if (count($users) >= 1){
 			echo "Sorry user name all ready exists. Please go back and submit another one.";
 		}
 		else{
+			//if the user enters a blank password it prompts the user to go back and enter a different password
 			if ($_POST['Password'] == ''){
 				echo "Password must be at least one character. Please go back and enter another password";
 			}
 			else {
+				//if password is not blank and the user name isn't taken then a new user is added to the database
 				$hashed_password = password_hash($_POST['Password'],PASSWORD_DEFAULT);	
 				$insertStatement = "Insert into Users values ( '" . $_POST['User_Name'] . "', '', '', 0, '" . $hashed_password ."')";  
 				$result = mysqli_query($conn,$insertStatement);
