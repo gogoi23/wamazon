@@ -26,6 +26,8 @@ Wamazon Home Page
 	else{
 		//This is the password when it goes through a hashing algorithm.
 		$hashed_password = password_hash($_POST['New_Password'],PASSWORD_DEFAULT);	
+		
+		//this inserts the new password into the data base
 		$sql = "update Users set password = '". $hashed_password ."' where UserID = '" . $_COOKIE['username'] . "'";
 		//echo $sql;
 		$result = mysqli_query($conn,$sql);
