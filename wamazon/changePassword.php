@@ -1,3 +1,5 @@
+<!-- Author: Anand Gogoi -->
+<!-- This is the page that lets the user change passwords  -->
 <html>
 <title>
 Wamazon Home Page 
@@ -8,7 +10,7 @@ Wamazon Home Page
 <H3> Changed password successfully </H3>
 
 <?php
-	// credentials for loggin into the database from a remote server
+	// credentials for loggin into the local data base. 
 	$servername = "localhost";
 	$username = "root";
 	$password = "cs434";
