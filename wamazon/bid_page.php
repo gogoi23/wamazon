@@ -108,8 +108,11 @@ Bid page
 	
 	//after the user places a bid then page executes this code
 	if (isset($_POST["Bid_Amount"])){
-		//if the places a numeric value then than the bid gets gets entered in the data base
+		//if the user places a numeric value then than the bid gets gets entered in the data base. 
+		
 		if (is_numeric($_POST["Bid_Amount"])){
+			//this checks if the bid is higher than the current amount. If it is not then the user is prompted to re enter the 
+			// the value
 			if($_POST["Bid_Amount"] <  $ItemAttributeArray[0]['Currently'] ){
 				echo '<script type="text/javascript">
        			window.onload = function () { alert("Please enter a bid higher than the current one."); } 
@@ -117,11 +120,13 @@ Bid page
 				echo "Error: Please enter a price higher than the current Bid.";
 				
 			}
+			//this updates the item's number of bids and highest bids
 			else{
 				
 				$numBidsQuery = "Select count(*) from Bid";
 				$numBidsEx = mysqli_query($conn,$numBidsQuery);
 				$actualNumDisplay = mysqli_fetch_all($numBidsEx,MYSQLI_ASSOC);
+				
 				
 				$id = $actualNumDisplay[0]["count(*)"] + 10;
 				$itemID = $ItemAttributeArray[0]['ItemID'];
