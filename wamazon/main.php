@@ -1,3 +1,6 @@
+<!-- Author: Anand Gogoi -->
+<!-- This page is the home page. Here the user can search for and also go the sell item and login page. -->
+
 <html>
 <title>
 Wamazon Home Page 
@@ -9,7 +12,7 @@ Wamazon Home Page
 	
 	
 	
-	// credentials for loggin into the database from a remote server
+	// credentials for loggin into the local data base
 	$servername = "localhost";
 	$username = "root";
 	$password = "cs434";
@@ -24,11 +27,14 @@ Wamazon Home Page
 	}
 	else{
 		echo "<br><h3> Wamazon Home Screen </h3>";
+		
+		//this is search bar form. The user can search by category,description, and seller id 
 		echo '	<form action= "search_page.php" method = "post">
       				<input type="text" placeholder="Search for Item" name="search">
       				<button type="submit">Enter</i></button>
       				<p>Please select which fields you want to check.</p>
   				
+				<!-- The following radio buttons let the user decide which field they want to search by -->
   				<input type="radio" id="age1" name="field"  checked="checked" value = "Description">
   				<label for="age1">Description</label><br>
   				
@@ -39,6 +45,9 @@ Wamazon Home Page
   				<label for="age3">Category</label><br>
     			</form>';
     		echo '<br>';
+		
+		
+		//this
     		echo '<a href="sellItemFrontEnd.php">Click here to go to sell an item</a> ';
     		echo '<br>';
 		if ( !isset($_POST["User_Name"]) and !isset($_COOKIE['username']) ) {
