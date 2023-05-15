@@ -7,9 +7,12 @@ Wamazon Home Page
 
 
 <?php
+	//displays the user name if they are logged in 
 	echo $_POST["User_Name"];
-	#echo $_POST["field"];
-	// credentials for loggin into the database from a remote server
+	
+	
+	
+	// credentials for loggin into the database on the local machine 
 	$servername = "localhost";
 	$username = "root";
 	$password = "cs434";
@@ -24,15 +27,17 @@ Wamazon Home Page
 	}
 	else{
 		
-		$sqlquery = "";
-		$sqlqueryExpired = "";
+		$sqlquery = ""; // this query gets all the items that aren't expired
+		$sqlqueryExpired = ""; // this query gets all the items that are expired
+		
+		//this sets the values above to search in the data base based on either the seller or description based on the value in field value of the post. 
 		if ($_POST["field"] != "Category"){
-		// hello i am goin to take my typing test after I do this idea. I am watching family guy. I really like to go to the john and figure hout how to jump into the bands and make cool millie on these hoes to figure out how to jump in coup and dash in a rari.
 			$sqlquery = "Select * from Items where " . $_POST["field"] . " like '%" . $_POST["search"] . "%' and ends > '" . date('d-m-y h:i:s') . "' order by currently";
-			//echo $sqlquery;
 			$sqlqueryExpired = "Select * from Items where " . $_POST["field"] . " like '%" . $_POST["search"] . "%' and ends < '" . date('d-m-y h:i:s') . "' order by currently";
-			//echo $sqlqueryExpired;
+
 		}
+		
+		//this sets the values above to search in the data base based on the category 
 		else {
 			$sqlquery = "Select Items.* from Items,ItemCategory,Category where Category.Description like '%" . $_POST["search"] . "%' and ends > '". date('d-m-y h:i:s') ."' and ItemCategory.ItemID = Items.ItemID and ItemCategory.CategoryId = Category.CategoryID order by currently";
 			$sqlqueryExpired = "Select Items.* from Items,ItemCategory,Category where Category.Description like '%" . $_POST["search"] . "%' and ends < '" . date('d-m-y h:i:s') ."' and ItemCategory.ItemID = Items.ItemID and ItemCategory.CategoryId = Category.CategoryID order by currently";
@@ -40,20 +45,20 @@ Wamazon Home Page
 			
 		}
 		
-		
+		// this stores the results of the two queries above in $resultArrayFirstHalf and $resultArraySecondHalf
 		$results = mysqli_query($conn,$sqlquery);
 		$resultArrayFirstHalf = mysqli_fetch_all($results,MYSQLI_ASSOC);
-		
 		$resultsSecondHalf = mysqli_query($conn,$sqlqueryExpired);
 		$resultArraySecondHalf = mysqli_fetch_all($resultsSecondHalf,MYSQLI_ASSOC);
 		
+		//this is the entire array 
 		$resultArray = array_merge($resultArrayFirstHalf, $resultArraySecondHalf);
 		
+		//it displays no results if no items show up 
 		if (count($resultArray) == 0){
-			echo "No results";
-				
-				
+			echo "No results";	
 		}
+		
 		else{
 			echo '<br>';
 			echo "<h3> Results</h3>";
