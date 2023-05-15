@@ -1,3 +1,6 @@
+#this adds primary and foreign keys to the tables in the database. 
+#It also sets default values and makes certain elements in the tables not be able to be null
+#it also creates triggers and indexes
 qry="Alter Table Bid add primary key(BidID);
 Alter Table Users add primary key(userID);
 Alter Table Category add primary key(CategoryID);
