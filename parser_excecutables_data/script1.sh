@@ -1,3 +1,6 @@
+#This script runs parser.py which converts all the json files in auctiondata into csv files. 
+#It then creates a mysql data base called Auction_Data_Base. It then makes tables and puts the csv files' data 
+#into into said tables. 
 qry="
 drop database Auction_Data_Base;
 CREATE DATABASE Auction_Data_Base;
