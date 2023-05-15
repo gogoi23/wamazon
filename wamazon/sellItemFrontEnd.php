@@ -1,3 +1,5 @@
+<!-- Author: Anand Gogoi -->
+<!-- This page allows the user to sell an item. -->
 <html>
 <title>
 Sell Page
@@ -8,11 +10,13 @@ Sell Page
 <H3> Item Sale Page </H3>
 
 <?php
+	//if the user is not logged they are prompted to go log in
 	if ( !isset($_COOKIE["username"]) ){
 		echo "You need to be logged in to sell an item. " ;
 		echo '<a href="Wamazon_Sign_In.php">Click here to go to the login screen</a> ';
 	}
 	else{
+		//this form lets the user enter the name,country,deadline,location,description, price, and category of the item. 
 		echo '<form action = "sellItemBackEnd.php" method = "post">
 		 enter the item name <input type= "text" name="Item_name"><br>
 		
