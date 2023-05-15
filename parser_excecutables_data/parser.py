@@ -1,3 +1,6 @@
+#Author: Anand gogoi
+#This code takes all the json files in Auction data and converts it into csv files.
+
 from pathlib import Path
 import json
 import csv
