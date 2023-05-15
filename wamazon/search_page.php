@@ -1,3 +1,7 @@
+<!-- Author: Anand Gogoi -->
+<!-- This page is the search page. It displays all the results of the user searching up an item based on either
+ it's category,sellerID, or description.-->
+
 <html>
 <title>
 Wamazon Home Page 
@@ -31,6 +35,7 @@ Wamazon Home Page
 		$sqlqueryExpired = ""; // this query gets all the items that are expired
 		
 		//this sets the values above to search in the data base based on either the seller or description based on the value in field value of the post. 
+		//both queries order the items by price 
 		if ($_POST["field"] != "Category"){
 			$sqlquery = "Select * from Items where " . $_POST["field"] . " like '%" . $_POST["search"] . "%' and ends > '" . date('d-m-y h:i:s') . "' order by currently";
 			$sqlqueryExpired = "Select * from Items where " . $_POST["field"] . " like '%" . $_POST["search"] . "%' and ends < '" . date('d-m-y h:i:s') . "' order by currently";
@@ -60,14 +65,20 @@ Wamazon Home Page
 		}
 		
 		else{
+			
 			echo '<br>';
 			echo "<h3> Results</h3>";
 			echo '<a href="main.php">Main Page</a> ';
+			//This forloop iterates through all the items returned by the search queries. 
 			for ($x = 0; $x < count($resultArray); $x++) {
-  				$categoryQuery = "Select Description from Category,ItemCategory where ItemID =" . $resultArray[$x]['ItemID'] . " and ItemCategory.CategoryID = Category.CategoryID";
+  				
+				//this query finds all the categories that the items is in 
+				$categoryQuery = "Select Description from Category,ItemCategory where ItemID =" . $resultArray[$x]['ItemID'] . " and ItemCategory.CategoryID = Category.CategoryID";
   				$categoryresults = mysqli_query($conn,$categoryQuery);
 				$categoryQueryArray = mysqli_fetch_all($categoryresults,MYSQLI_ASSOC);
-  				//print_r($resultArray[$x]);
+  				
+				
+				//this diplays the result number,name,id,owner,price,expiration date, and release date of the item.
   				echo "<p>";
   				echo "Result Number: " . ($x + 1) . '<br>';
   				echo "Item name: " . $resultArray[$x]['Name'] . '<br>';
@@ -77,6 +88,7 @@ Wamazon Home Page
   				echo "The last date to place bids on this item is " . $resultArray[$x]['ends'] . '<br>';
   				echo 'The bidding started on ' . $resultArray[$x]['started'] . '<br>';
   				
+				//this displays all the categories of the items. 
 				echo "Category(s): ";
   				for ($i = 0; $i < count($categoryQueryArray); $i++){
   					echo $categoryQueryArray[$i]["Description"];
@@ -84,6 +96,8 @@ Wamazon Home Page
   						echo ", ";
  					}
   				}
+				
+				//this displays the bids,locations,countries,buy prices, and description of the items
   				echo '<br>';
   				echo "Number of Bids: " . $resultArray[$x]['NumberofBids'] . '<br>';
   				echo "Location: " . $resultArray[$x]['Location'] .'<br>';
@@ -94,6 +108,7 @@ Wamazon Home Page
   				echo "Description " . '<br>';
   				echo $resultArray[$x]['Description'] . '<br>';
   				
+				//this form lets the user place a bid on the item. 
   				echo '<form action= "bid_page.php" method = "post">';
   				echo '<button type="submit">Place Bid</button>';
   				echo '<input type = "hidden" name = "Item_Name" value = "' . $resultArray[$x]['Name'] .'" />';
